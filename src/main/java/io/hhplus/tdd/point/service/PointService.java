@@ -1,5 +1,6 @@
 package io.hhplus.tdd.point.service;
 
+import io.hhplus.tdd.point.lock.UserLockManager;
 import io.hhplus.tdd.point.model.PointHistory;
 import io.hhplus.tdd.point.model.TransactionType;
 import io.hhplus.tdd.point.model.UserPoint;
@@ -16,11 +17,15 @@ public class PointService {
 
     private final UserPointRepository userPointRepository;
     private final PointHistoryRepository pointHistoryRepository;
+    private final UserLockManager lockManager;
+
 
     public PointService(UserPointRepository userPointRepository,
-                        PointHistoryRepository pointHistoryRepository){
+                        PointHistoryRepository pointHistoryRepository,
+                        UserLockManager lockManager) {
         this.userPointRepository = userPointRepository;
         this.pointHistoryRepository = pointHistoryRepository;
+        this.lockManager = lockManager;
     }
 
     public UserPoint get(long userId) {
@@ -33,23 +38,27 @@ public class PointService {
 
     public UserPoint charge(long userId, long amount){
         validateAmount(amount);
-        UserPoint current = userPointRepository.findById(userId);
-        long newAmount = current.point() + amount;
-        UserPoint updatedPoint = userPointRepository.save(userId, newAmount);
-        pointHistoryRepository.save(userId, amount, TransactionType.CHARGE, updatedPoint.updateMillis());
-        return updatedPoint;
+        synchronized (lockManager.getLock(userId)) {
+            UserPoint current = userPointRepository.findById(userId);
+            long newAmount = current.point() + amount;
+            UserPoint updatedPoint = userPointRepository.save(userId, newAmount);
+            pointHistoryRepository.save(userId, amount, TransactionType.CHARGE, updatedPoint.updateMillis());
+            return updatedPoint;
+        }
     }
 
     public UserPoint use(long userId, long amount){
         validateAmount(amount);
-        UserPoint current = userPointRepository.findById(userId);
-        if(current.point() < amount){
-            throw new IllegalArgumentException(INSUFFICIENT_BALANCE);
+        synchronized (lockManager.getLock(userId)) {
+            UserPoint current = userPointRepository.findById(userId);
+            if(current.point() < amount){
+                throw new IllegalArgumentException(INSUFFICIENT_BALANCE);
+            }
+            long newAmount = current.point() - amount;
+            UserPoint updatedPoint = userPointRepository.save(userId, newAmount);
+            pointHistoryRepository.save(userId, amount, TransactionType.USE, updatedPoint.updateMillis());
+            return updatedPoint;
         }
-        long newAmount = current.point() - amount;
-        UserPoint updatedPoint = userPointRepository.save(userId, newAmount);
-        pointHistoryRepository.save(userId, amount, TransactionType.USE, updatedPoint.updateMillis());
-        return updatedPoint;
     }
 
     private void validateAmount(long amount) {
