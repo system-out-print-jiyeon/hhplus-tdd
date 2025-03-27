@@ -1,12 +1,8 @@
 ### **커밋 링크**
 
-**사용자 포인트, 내역 조회 기능구현 + 단위 테스트 코드 작성 :**
+사용자 포인트, 내역 조회 기능구현 + 단위 테스트 코드 작성 : [28e7e72](https://github.com/system-out-print-jiyeon/hhplus-tdd/commit/28e7e721b4874dd82b844d29a23699f5a7656fb5)
 
-[https://github.com/system-out-print-jiyeon/hhplus-tdd/commit/28e7e721b4874dd82b844d29a23699f5a7656fb5](https://github.com/system-out-print-jiyeon/hhplus-tdd/commit/28e7e721b4874dd82b844d29a23699f5a7656fb5)
-
-사용자 포인트 충전,사용 기능구현 + 단위 테스트 코드 작성 :
-
-[https://github.com/system-out-print-jiyeon/hhplus-tdd/commit/badfd87423dbfbe9894a9d23397229cd4d260b37](https://github.com/system-out-print-jiyeon/hhplus-tdd/commit/badfd87423dbfbe9894a9d23397229cd4d260b37)
+사용자 포인트 충전,사용 기능구현 + 단위 테스트 코드 작성 : [badfd87](https://github.com/system-out-print-jiyeon/hhplus-tdd/commit/badfd87423dbfbe9894a9d23397229cd4d260b37)
 
 ---
 
