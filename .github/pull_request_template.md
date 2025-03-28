@@ -4,6 +4,10 @@
 
 사용자 포인트 충전,사용 기능구현 + 단위 테스트 코드 작성 : [badfd87](https://github.com/system-out-print-jiyeon/hhplus-tdd/commit/badfd87423dbfbe9894a9d23397229cd4d260b37)
 
+동시성 제어 추가 : [8a94849](https://github.com/system-out-print-jiyeon/hhplus-tdd/commit/8a9484935dea81a41d2143f9d42a3fa2c7bb7c80)
+
+통합테스트 작성 : [b99ca13](https://github.com/system-out-print-jiyeon/hhplus-tdd/commit/b99ca134255ae1aab199a33b05d9aa49db58f7ba)
+
 ---
 
 ### **리뷰 포인트(질문)**
